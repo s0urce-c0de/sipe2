@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Sync Internals Policy Extractor</title>
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <form id="network-to-sync-node"
+          onsubmit="
+            event.preventDefault();
+            document.getElementById('sync_name').innerHTML = `<code>${hex(event.target.elements['network-name'].value)}&lt;||&gt;psk</code>`;
+     ">
+      <label for="network-name">Network Name:</label>
+      <input type="text" name="network-name">
+      <input type="submit" value="Get Network Sync Node">
+    </form>
+    <br>
+    <p>Go to chrome://sync-internals and click "Sync Node Browser".
+    Then click "Wifi Configurations". Then click <span id="sync_name">the wifi that you want</span>. And copy the text that and is in curly braces. Paste it below and click Extract Password.</p>
+    <br>
+    <form onsubmit="
+            event.preventDefault();
+            info=getInfo(event.target.elements.json.value);
+            document.getElementById('output').innerHTML=`<tr><td>Network Name</td><td>${info.ssid}</td></tr><tr><td>Password</td><td>${info.password}</td></tr>`
+    ">
+      <textarea name="json" rows="10" style="width:100%"></textarea>
+      <input type="submit" value="Extract Password">
+    </form>
+    <table id="output"></table>
+  </body>
+</html>
